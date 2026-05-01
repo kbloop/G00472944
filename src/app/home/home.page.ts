@@ -4,16 +4,17 @@ import { addIcons } from 'ionicons';
 import {heart, search, searchCircle} from "ionicons/icons";
 import { MovieCardComponent } from "../movie-card/movie-card.component";
 import { MyHttp } from '../services/my-http';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon, IonSearchbar, MovieCardComponent],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon, IonSearchbar, MovieCardComponent, CommonModule],
 })
 export class HomePage {
   url = 'https://api.themoviedb.org/3/movie/popular';
-
+  trendingMovies = [];
   constructor(private mhs: MyHttp) {
     addIcons( { heart, search, searchCircle });
   }
@@ -24,7 +25,10 @@ export class HomePage {
 
   getTrendingMovies() {
     this.mhs.get(this.url).subscribe({
-      next: (v) => console.log(v),
+      next: (data) => {
+        console.log(data);
+        this.trendingMovies = data.results;
+      },
       error: (e) => console.error(e),
       complete: () => console.info('complete :3')
     });

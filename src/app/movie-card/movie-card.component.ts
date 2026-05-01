@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, input } from '@angular/core';
 import { IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonButtons } from "@ionic/angular/standalone";
 import { addIcons } from 'ionicons';
 import { heart, heartOutline } from 'ionicons/icons';
@@ -10,6 +10,7 @@ import { heart, heartOutline } from 'ionicons/icons';
   imports: [IonButtons, IonButton, IonIcon,  IonCard, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent]
 })
 export class MovieCardComponent  implements OnInit {
+  @Input() movie: any;
 
   constructor() {
     addIcons( { heart, heartOutline} );
