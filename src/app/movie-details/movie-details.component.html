@@ -1,0 +1,29 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      {{ movie?.title }}
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="icon-only" name="heart"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon slot="icon-only" name="home"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-grid>
+  <!-- <img class="movie-details__backdrop" src="https://image.tmdb.org/t/p/original/{{movie?.backdrop_path}}"> -->
+  <img class="movie-details__poster" src="https://image.tmdb.org/t/p/original/{{movie?.poster_path}}">
+  <ion-row>
+    <ion-col *ngFor="let genre of movie?.genres">
+      <ion-chip>{{ genre.name }}</ion-chip>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <p class="">{{ movie?.overview }}</p>
+    </ion-col>
+  </ion-row>
+</ion-grid>

@@ -5,6 +5,9 @@ import {heart, search, searchCircle} from "ionicons/icons";
 import { MovieCardComponent } from "../movie-card/movie-card.component";
 import { MyHttp } from '../services/my-http';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +18,7 @@ import { CommonModule } from '@angular/common';
 export class HomePage {
   url = 'https://api.themoviedb.org/3/movie/popular';
   trendingMovies = [];
-  constructor(private mhs: MyHttp) {
+  constructor(private mhs: MyHttp, private route: ActivatedRoute) {
     addIcons( { heart, search, searchCircle });
   }
 

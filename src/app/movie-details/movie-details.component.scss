@@ -1,0 +1,11 @@
+.movie-details__backdrop {
+    position: fixed;
+    inset: 0;
+    height: 100vh;
+    object-fit: fill;
+    filter: blur(8px);
+}
+
+.text-white {
+    color: white;
+}

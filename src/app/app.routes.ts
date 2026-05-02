@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { MovieDetailsComponent } from './movie-details/movie-details.component';
 
 export const routes: Routes = [
   {
@@ -10,4 +11,9 @@ export const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full',
   },
+  {
+    path: 'movie-details/:id',
+    component: MovieDetailsComponent,
+  },
+  
 ];
