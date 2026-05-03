@@ -7,23 +7,102 @@
       <ion-button>
         <ion-icon slot="icon-only" name="heart"></ion-icon>
       </ion-button>
-      <ion-button>
+      <ion-button routerLink="/home">
         <ion-icon slot="icon-only" name="home"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-grid>
-  <!-- <img class="movie-details__backdrop" src="https://image.tmdb.org/t/p/original/{{movie?.backdrop_path}}"> -->
-  <img class="movie-details__poster" src="https://image.tmdb.org/t/p/original/{{movie?.poster_path}}">
-  <ion-row>
-    <ion-col *ngFor="let genre of movie?.genres">
-      <ion-chip>{{ genre.name }}</ion-chip>
-    </ion-col>
-  </ion-row>
-  <ion-row>
+<ion-content>
+
+  <ion-grid>
+    <!-- <img class="movie-details__backdrop" src="https://image.tmdb.org/t/p/original/{{movie?.backdrop_path}}"> -->
+    <img class="movie-details__poster" src="https://image.tmdb.org/t/p/original/{{movie?.poster_path}}">
+    <ion-row>
+      <ion-col>
+        <ion-button>
+          Add To Favourites / Remove from Favourites
+        </ion-button>
+      </ion-col>
+      <ion-col *ngFor="let genre of movie?.genres">
+        <ion-chip>{{ genre.name }}</ion-chip>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <p class="">{{ movie?.overview }}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        Cast
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      
     <ion-col>
-      <p class="">{{ movie?.overview }}</p>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+      <ion-item *ngFor="let cast of credits?.cast | slice:0:5" [routerLink]="['/detials/', cast.id]">
+        <ion-avatar>
+          <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        </ion-avatar>
+        <ion-label>
+            {{cast.name}}
+          <br>
+          <small>
+            {{cast.character}}
+          </small>
+        </ion-label>
+        <ion-button  fill="clear">
+          <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <!-- Button to load in rest of Cast members -->
+      <ion-item>
+        <ion-label>
+            Load more
+        </ion-label>
+        <ion-button fill="clear">
+          <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col>
+        Crew
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      
+    <ion-col>
+      <ion-item *ngFor="let crew of credits?.crew | slice:0:5">
+        <ion-avatar>
+          <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        </ion-avatar>
+        <ion-label>
+          {{ crew.name }}
+          <br>
+          <small>
+          {{ crew.job }}
+          </small>
+        </ion-label>
+        <ion-button href="" fill="clear">
+          <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <!-- Button to load in rest of Crew members -->
+      <ion-item>
+        <ion-label>
+            Load more
+        </ion-label>
+        <ion-button fill="clear">
+          <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>

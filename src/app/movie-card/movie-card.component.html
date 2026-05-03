@@ -1,4 +1,4 @@
-<ion-card button="true" href="movie-details/{{ movie.id }}">
+<ion-card button="true" [routerLink]="['/movie-details/', movie.id]">
   <ion-button class="moviecard__like-btn" shape="round" translucent="true">
     <ion-icon slot="icon-only" name="heart-outline" close-icon="heart"></ion-icon>
   </ion-button>
