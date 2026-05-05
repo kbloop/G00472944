@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon, IonSearchbar } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import {heart, search, searchCircle} from "ionicons/icons";
+import { heart, search, searchCircle} from "ionicons/icons";
 import { MovieCardComponent } from "../movie-card/movie-card.component";
 import { MyHttp } from '../services/my-http';
 import { CommonModule } from '@angular/common';

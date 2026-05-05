@@ -1,0 +1,108 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+       {{ details?.name }}
+    </ion-title>
+    <ion-buttons slot="end">
+  
+      <ion-button routerLink="/home">
+        <ion-icon slot="icon-only" name="home"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light">
+  <!-- Show some details -->
+  <ion-list [inset]="true">
+    <!-- Conditionally show an image of the person -->
+    <ion-img *ngIf="details?.profile_path; else: noImage"
+    class="details-page__img"
+    src="https://image.tmdb.org/t/p/w185/{{ details?.profile_path }}"
+    alt="Image of {{details?.name}}"
+    ></ion-img>
+    <ion-item *ngIf="details?.also_known_as.length > 0">
+      <ion-note color="medium">Also Known As</ion-note>
+      <ion-label *ngFor="let name of details?.also_known_as">{{name}}</ion-label>
+    </ion-item>
+    <ion-item *ngIf="details?.biography">
+      <ion-note color="medium">Biography</ion-note>
+      <ion-label>{{details?.biography}}</ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-list [inset]="true">
+    <ion-item>
+      <ion-label>Movie Credits</ion-label>
+    </ion-item>
+    <ion-item *ngFor="let movie of credits?.cast | slice:0:5" [routerLink]="['/details/', movie?.credit_id]">
+      <ion-avatar>
+        <img alt="Movie Avatar" src="https://image.tmdb.org/t/p/original/{{ movie?.poster_path }}" />
+      </ion-avatar>
+      <ion-label>
+          {{movie?.title}}
+        <br>
+        <small>
+          {{movie?.character}}
+        </small>
+      </ion-label>
+      <ion-button  fill="clear">
+        <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+    <!-- Button to load in rest of Cast members -->
+    <ion-item>
+      <ion-label>
+          Load more
+      </ion-label>
+      <ion-button fill="clear">
+        <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+  <ion-list [inset]="true">
+    <ion-item>
+      <ion-label>
+        Other Credits
+      </ion-label>
+    </ion-item>
+    <ion-item *ngFor="let movie of credits?.crew | slice:0:5"  [routerLink]="['/movie-details/', movie?.id]">
+      <ion-avatar>
+        <img alt="Silhouette of a person's head" src="https://image.tmdb.org/t/p/original/{{ movie?.poster_path }}" />
+      </ion-avatar>
+      <ion-label>
+        {{ movie.title }}
+        <br>
+        <small>
+        {{ movie.job }}
+        </small>
+      </ion-label>
+      <ion-button href="" fill="clear">
+        <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+    <!-- Button to load in rest of Crew members -->
+    <ion-item>
+      <ion-label>
+          Load more
+      </ion-label>
+      <ion-button fill="clear">
+        <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+ 
+  
+  <!-- Template for when the API doesn't have an image available. -->
+  <ng-template #noImage class="details-page__no-image">
+    <ion-list [inset]="true">
+      <ion-item>
+        <ion-avatar>
+          <ion-icon name="person-circle-outline"  style="font-size: 32px;"></ion-icon>
+        </ion-avatar>
+
+        <ion-label>
+          No image available
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ng-template>

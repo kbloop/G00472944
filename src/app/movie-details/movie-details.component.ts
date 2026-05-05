@@ -6,6 +6,7 @@ import { heart, home, chevronForwardOutline, addOutline } from "ionicons/icons";
 import { MyHttp } from '../services/my-http';
 import { IonChip, IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon, IonGrid, IonRow, IonCol, IonAvatar, IonItem, IonLabel } from "@ionic/angular/standalone";
 import { CommonModule } from '@angular/common';
+import { Credits } from '../models/credits';
 
 @Component({
   selector: 'app-movie-details',
@@ -15,7 +16,7 @@ import { CommonModule } from '@angular/common';
 })
 export class MovieDetailsComponent  implements OnInit {
   movie: any;
-  credits: any;
+  credits?: Credits;
   private url : string = 'https://api.themoviedb.org/3/movie/'; // + {movie_id}
   private creditsSuffix : string = '/credits' 
   constructor(private route: ActivatedRoute, private router: Router, private mhs: MyHttp) {
