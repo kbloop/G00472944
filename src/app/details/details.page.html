@@ -34,7 +34,7 @@
     <ion-item>
       <ion-label>Movie Credits</ion-label>
     </ion-item>
-    <ion-item *ngFor="let movie of credits?.cast | slice:0:5" [routerLink]="['/details/', movie?.credit_id]">
+    <ion-item *ngFor="let movie of credits?.cast | slice:0:5" [routerLink]="['/movie-details/', movie?.id]">
       <ion-avatar>
         <img alt="Movie Avatar" src="https://image.tmdb.org/t/p/original/{{ movie?.poster_path }}" />
       </ion-avatar>
