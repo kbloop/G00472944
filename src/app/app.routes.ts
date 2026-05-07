@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { MovieDetailsComponent } from './movie-details/movie-details.component';
+
 
 export const routes: Routes = [
   {
@@ -13,11 +13,15 @@ export const routes: Routes = [
   },
   {
     path: 'movie-details/:id',
-    component: MovieDetailsComponent,
+    loadComponent: () => import('./movie-details/movie-details.page').then( m => m.MovieDetailsPage)
   },
   {
     path: 'details/:id',
     loadComponent: () => import('./details/details.page').then((m) => m.DetailsPage),
+  },
+  {
+    path: 'favourites',
+    loadComponent: () => import('./favourites/favourites.page').then( m => m.FavouritesPage)
   },
   
 ];

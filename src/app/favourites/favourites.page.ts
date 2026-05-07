@@ -1,0 +1,26 @@
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonIcon } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { heart, home } from 'ionicons/icons';
+import { MovieCardComponent } from "../movie-card/movie-card.component";
+import { RouterLink } from '@angular/router';
+
+@Component({
+  selector: 'app-favourites',
+  templateUrl: './favourites.page.html',
+  styleUrls: ['./favourites.page.scss'],
+  standalone: true,
+  imports: [RouterLink, IonIcon, IonButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, MovieCardComponent]
+})
+export class FavouritesPage implements OnInit {
+
+  constructor() {
+    addIcons({heart, home})
+   }
+
+  ngOnInit() {
+  }
+
+}
