@@ -12,5 +12,5 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-<!-- <movie-card></movie-card> -->
+<movie-card *ngFor="let fav of favouritesToDisplay" [movie]="fav"></movie-card>
 </ion-content>

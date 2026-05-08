@@ -7,6 +7,7 @@ import { MyHttp } from '../services/my-http';
 import { IonChip, IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon, IonGrid, IonRow, IonCol, IonAvatar, IonItem, IonLabel } from "@ionic/angular/standalone";
 import { CommonModule } from '@angular/common';
 import { Credits } from '../models/credits';
+import { MyData } from '../services/my-data';
 
 @Component({
   selector: 'app-movie-details',
@@ -20,7 +21,7 @@ export class MovieDetailsPage implements OnInit {
   credits?: Credits;
   private url : string = 'https://api.themoviedb.org/3/movie/'; // + {movie_id}
   private creditsSuffix : string = '/credits' 
-  constructor(private route: ActivatedRoute, private router: Router, private mhs: MyHttp) {
+  constructor(private route: ActivatedRoute, private router: Router, private mhs: MyHttp, private mds: MyData) {
     addIcons( { heart, home, chevronForwardOutline, addOutline });
    }
 
@@ -40,6 +41,10 @@ export class MovieDetailsPage implements OnInit {
         this.credits = data;
       }
     });
+  }
+
+  async addToFavourites() {
+    await this.mds.set(this.movie.id, this.movie);
   }
 
 }

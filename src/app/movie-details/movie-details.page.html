@@ -20,7 +20,7 @@
     <img class="movie-details__poster" src="https://image.tmdb.org/t/p/original/{{movie?.poster_path}}">
     <ion-row>
       <ion-col>
-        <ion-button>
+        <ion-button (click)="addToFavourites()">
           Add To Favourites / Remove from Favourites
         </ion-button>
       </ion-col>

@@ -19,13 +19,13 @@ import { MyData } from '../services/my-data';
 export class HomePage {
   url = 'https://api.themoviedb.org/3/movie/popular';
   trendingMovies = [];
+
   constructor(private mhs: MyHttp, private mds: MyData, private route: ActivatedRoute) {
     addIcons( { heart, search, searchCircle });
   }
 
   ngOnInit() {
     this.getTrendingMovies();
-    this.mds.set('name', 'John');
   }
 
   getTrendingMovies() {
