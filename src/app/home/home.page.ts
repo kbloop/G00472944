@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon, IonSearchbar, IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
+import { LoadingController, IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon, IonSearchbar, IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { heart, search, searchCircle} from "ionicons/icons";
 import { MovieCardComponent } from "../movie-card/movie-card.component";
@@ -24,12 +24,15 @@ export class HomePage {
   searchTerm: string = '';
   searchURL = 'https://api.themoviedb.org/3/search/movie?query=';
   searchMovies = [];
+  loader : any; 
+  loadingType: string = "Trending" ;
+  loadingMsg: string = `Loading ${ this.loadingType } movies... :3` ;
   trendingBtnColor: string = "primary";
   topRatedBtnColor: string = "light";
   upcomingBtnColor: string = "light";
   playingBtnColor: string = "light";
   
-  constructor(private mhs: MyHttp, private mds: MyData, private route: ActivatedRoute) {
+  constructor(private mhs: MyHttp, private loadingCtrl: LoadingController) {
     addIcons( { heart, search, searchCircle });
   }
   
@@ -38,7 +41,9 @@ export class HomePage {
     this.getTrendingMovies();
   }
   
-  getTrendingMovies() {
+  getTrendingMovies() { 
+    this.loadingType = "Trending";
+    this.showLoading();
     this.url = 'https://api.themoviedb.org/3/movie/popular';
     // Toggle the color of the buttons to mimic a tab (don't want to use ion-tab, that's more for like page navigation)
     this.trendingBtnColor = "primary";
@@ -53,11 +58,16 @@ export class HomePage {
         this.moviesToShow = data.results;
       },
       error: (e) => console.error(e),
-      complete: () => console.info('Trending movies loading complete :3')
+      complete: () => {
+        console.info('Trending movies loading complete :3');
+        this.loader.dismiss();
+      }
     });
   }
   
   getTopRatedMovies() {
+    this.loadingType = "Top Rated";
+    this.showLoading();
     this.url = 'https://api.themoviedb.org/3/movie/top_rated';
     // Toggle the color of the buttons to mimic a tab
     this.trendingBtnColor = "light";
@@ -71,11 +81,16 @@ export class HomePage {
         this.moviesToShow = data.results;
       },
       error: (e) => console.error(e),
-      complete: () => console.info('Trending movies loading complete :3')
+      complete: () => {
+        console.info('Top Rated movies loading complete :3');
+        this.loader.dismiss();
+      }
     });
   }
   
   getPlayingMovies() {
+    this.loadingType = "Currently Playing";
+    this.showLoading();
     this.url = 'https://api.themoviedb.org/3/movie/now_playing';
     // Toggle the color of the buttons to mimic a tab
     this.trendingBtnColor = "light";
@@ -89,11 +104,16 @@ export class HomePage {
         this.moviesToShow = data.results;
       },
       error: (e) => console.error(e),
-      complete: () => console.info('Trending movies loading complete :3')
+      complete: () => {
+        console.info('Currently Playing movies loading complete :3');
+        this.loader.dismiss();
+      }
     });
   }
-
+  
   getUpcomingMovies() {
+    this.loadingType = "Upcoming";
+    this.showLoading();
     this.url = 'https://api.themoviedb.org/3/movie/upcoming';
     // Toggle the color of the buttons to mimic a tab
     this.trendingBtnColor = "light";
@@ -107,7 +127,10 @@ export class HomePage {
         this.moviesToShow = data.results;
       },
       error: (e) => console.error(e),
-      complete: () => console.info('Trending movies loading complete :3')
+      complete: () => {
+        console.info('Upcoming movies loading complete :3');
+        this.loader.dismiss();
+      }
     });
   }
 
@@ -127,5 +150,15 @@ export class HomePage {
       complete: () => console.info('Movie search is finished :D Hope you have found what you seek')
     });
     console.log(`Value of searchbar is ${ this.searchTerm }`);
+  }
+
+  async showLoading() {
+    this.loadingMsg = `Loading ${ this.loadingType } movies... :3` ;
+    this.loader = await this.loadingCtrl.create({
+      message: this.loadingMsg,
+      // duration: 5000,
+    });
+    console.log("presenting loader");
+    this.loader.present();
   }
 }

@@ -23,11 +23,17 @@
   </ion-header>
   <ion-grid>
     <ion-row>
-      <ion-col>
-        <ion-button [color]="trendingBtnColor" (click)="getTrendingMovies()">Trending Movies</ion-button>
-        <ion-button [color]="topRatedBtnColor" (click)="getTopRatedMovies()">Top Rated Movies</ion-button>
-        <ion-button [color]="upcomingBtnColor" (click)="getUpcomingMovies()">Upcoming Movies</ion-button>
-        <ion-button [color]="playingBtnColor" (click)="getPlayingMovies()">Currently Playing Movies</ion-button>
+      <ion-col size="auto" sizeLg="3" sizeXl="2">
+        <ion-button size="small" [color]="trendingBtnColor" (click)="getTrendingMovies()">Trending Movies</ion-button>
+      </ion-col>
+      <ion-col size="auto" sizeLg="3" sizeXl="2">
+        <ion-button size="small" [color]="topRatedBtnColor" (click)="getTopRatedMovies()">Top Rated Movies</ion-button>
+      </ion-col>
+      <ion-col size="auto" sizeLg="3" sizeXl="2">
+        <ion-button size="small" [color]="upcomingBtnColor" (click)="getUpcomingMovies()">Upcoming Movies</ion-button>
+      </ion-col>
+      <ion-col size="auto" sizeLg="3" sizeXl="2">
+        <ion-button size="small" [color]="playingBtnColor" (click)="getPlayingMovies()">Currently Playing Movies</ion-button>
       </ion-col>
     </ion-row>
     <ion-row>

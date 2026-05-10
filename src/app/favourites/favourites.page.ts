@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonIcon, IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonIcon, IonGrid, IonRow, IonCol, IonRefresher, IonRefresherContent, RefresherCustomEvent } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { heart, home } from 'ionicons/icons';
 import { MovieCardComponent } from "../movie-card/movie-card.component";
@@ -15,7 +15,7 @@ import { Movie } from '../models/credits';
   templateUrl: './favourites.page.html',
   styleUrls: ['./favourites.page.scss'],
   standalone: true,
-  imports: [RouterLink, IonIcon, IonButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, MovieCardComponent, IonRow, IonCol, IonGrid]
+  imports: [IonRefresherContent, IonRefresher, RouterLink, IonIcon, IonButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, MovieCardComponent, IonRow, IonCol, IonGrid]
 })
 export class FavouritesPage implements OnInit {
   favouritesToDisplay: any;
@@ -35,6 +35,11 @@ export class FavouritesPage implements OnInit {
   async getFavouritesFromStorage() {
     this.favouritesToDisplay = await this.mds.getAll();
     console.log(this.favouritesToDisplay);
+  }
+
+  // Adding in a refresher so that the favourite's list can be updated after pressing the floating like/dislike btn.
+  handleRefresh(event: RefresherCustomEvent) {
+    this.getFavouritesFromStorage().then(() => event.target.complete());
   }
 
 }

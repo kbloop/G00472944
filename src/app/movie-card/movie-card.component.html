@@ -4,7 +4,8 @@
     <ion-icon slot="icon-only" name="heart" close-icon="heart"></ion-icon>
   </ion-button>
   <ion-card class="moviecard" button="true" [routerLink]="['/movie-details/', movie.id]">
-    <img class="moviecard__poster-img" alt="Movie poster" src="https://image.tmdb.org/t/p/original{{ movie.poster_path }}" />
+    <!-- Use a poster that says the words "Not Found" for any movies that do not have a poster path. Yes, I chose the funniest one. -->
+    <img class="moviecard__poster-img" alt="Movie poster" src="https://image.tmdb.org/t/p/original{{ movie.poster_path ?? '/1xQs62aprq21ZM8HahY8MVO6tNS.jpg' }}" />
     <ion-card-header>
       <ion-card-title class="moviecard__title">{{ movie.title }}</ion-card-title>
       <ion-card-subtitle>
