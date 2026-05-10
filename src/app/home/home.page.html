@@ -14,15 +14,12 @@
 <ion-content>
   <ion-header>
     <ion-toolbar>
-      <ion-searchbar search-icon="search-circle" placeholder="Movie Name"></ion-searchbar>
-      <ion-button>Search</ion-button>
+      <!-- Using keydown.enter instead of ionchange so that it only fires when the user hits their enter key, not when focus is lost. -->
+      <ion-searchbar (keydown.enter)="searchForMovies()" [(ngModel)]="searchTerm" animated="true" placeholder="Movie Name..." show-clear-button="focus"></ion-searchbar>
+      <!-- Firing the search with the Button -->
+      <ion-button (click)="searchForMovies()" expand="full">Search</ion-button>
     </ion-toolbar>
   </ion-header>
-
-  <div id="container">
-    <strong>Todays Tending Movies</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
-
-  <movie-card *ngFor="let movie of trendingMovies" [movie]="movie"></movie-card>
+  <!-- Rendering our movie cards components -->
+  <movie-card *ngFor="let movie of moviesToShow" [movie]="movie"></movie-card>
 </ion-content>

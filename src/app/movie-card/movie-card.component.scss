@@ -1,5 +1,12 @@
+.moviecard {
+    max-width: 32rem;
+}
 .moviecard__like-btn {
     position: absolute;
     top: .5rem;
     right: .5rem;
+}
+
+.moviecard__poster-img {
+    max-width: 16rem;
 }

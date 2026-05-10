@@ -1,8 +1,8 @@
-<ion-card button="true" [routerLink]="['/movie-details/', movie.id]">
+<ion-card class="moviecard" button="true" [routerLink]="['/movie-details/', movie.id]">
   <ion-button class="moviecard__like-btn" shape="round" translucent="true" (click)="saveFavourite(movie)">
     <ion-icon slot="icon-only" name="heart-outline" close-icon="heart"></ion-icon>
   </ion-button>
-  <img alt="Movie poster" src="https://image.tmdb.org/t/p/original/{{ movie.poster_path }}" />
+  <img class="moviecard__poster-img" alt="Movie poster" src="https://image.tmdb.org/t/p/original/{{ movie.poster_path }}" />
   <ion-card-header>
     <ion-card-title>{{ movie.title }}</ion-card-title>
     <ion-card-subtitle>
@@ -11,7 +11,7 @@
     </ion-card-subtitle>
   </ion-card-header>
 
-  <ion-card-content>
+  <ion-card-content class="moviecard__overview-text">
     {{ movie.overview }}
   </ion-card-content>
 </ion-card>
