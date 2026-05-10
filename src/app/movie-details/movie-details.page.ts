@@ -19,6 +19,9 @@ import { MyData } from '../services/my-data';
 export class MovieDetailsPage implements OnInit {
   movie: any;
   credits?: Credits;
+  isFav?: boolean;
+  favBtnText: string = 'Add to Favourites'; 
+
   private url : string = 'https://api.themoviedb.org/3/movie/'; // + {movie_id}
   private creditsSuffix : string = '/credits' 
   constructor(private route: ActivatedRoute, private router: Router, private mhs: MyHttp, private mds: MyData) {
@@ -26,6 +29,7 @@ export class MovieDetailsPage implements OnInit {
    }
 
   ngOnInit() {
+    // Get the details for this particular movie/  
     const id = this.route.snapshot.paramMap.get('id');
     this.mhs.get(this.url + id).subscribe({
       next: (data) => {
@@ -35,16 +39,59 @@ export class MovieDetailsPage implements OnInit {
       error: (e) => console.log(e),
       complete: () => console.info("Movie details loaded :D")
     });
+
+    // Another API call to get the credits for this movie
     this.mhs.get(this.url + id + this.creditsSuffix).subscribe({
       next: (data) => {
         console.log(data);
         this.credits = data;
       }
     });
+
+    // Check if the movie is a favourite
+    this.checkFavs(id);
   }
 
-  async addToFavourites() {
-    await this.mds.set(this.movie.id, this.movie);
+  // Check if this movie is already a favourite 
+  async checkFavs(id: string | null) {
+    if(id === null) return;
+
+    this.mds.get(id).then(
+    (data) => {
+      console.log("Checking your favourite moovys....  :)" );
+      console.log(data);
+      if(data == null) {
+        console.log("It's not a fav")
+        this.isFav = false;
+        this.favBtnText = "Add To Favourites";
+      } else {
+        console.log("It's already a fav! You have such good taste")
+        this.isFav = true;
+        this.favBtnText = "Remove From Favourites"
+      }
+    }
+    );
+  }
+
+  // Toggle the movie to our favourites via the Data service.
+  async toggleFavourites() {
+    if(this.isFav) {
+      // It's already a favourites so we unfav it :( </3 
+      console.log(`Removing ${this.movie.title} from your favourtes...`)
+      await this.mds.remove(this.movie.id.toString()).then(
+        () => { 
+          this.checkFavs(this.movie.id.toString());
+        }
+      );
+    } else {
+      console.log(`Adding ${this.movie.title} to your favourtes...`)
+      // It's not a fav so we add it to our favs <3 :)
+      await this.mds.set(this.movie.id.toString(), this.movie).then(
+        () => {
+          this.checkFavs(this.movie.id.toString());
+        }
+      );
+    }
   }
 
 }

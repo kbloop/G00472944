@@ -6,6 +6,12 @@
     filter: blur(8px);
 }
 
+.movie-details__poster {
+    width: 100%;
+    // Clamp so the image is a bit more responsive.
+    max-width: clamp(16rem, 26rem ,32rem);
+}
+
 .text-white {
     color: white;
 }

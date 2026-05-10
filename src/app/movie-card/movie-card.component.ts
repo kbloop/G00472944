@@ -23,11 +23,11 @@ export class MovieCardComponent  implements OnInit {
   ngOnInit() {}
 
   async saveFavourite(movie:any) {
-    await this.mds.set(movie.id, movie)
+    await this.mds.set(movie.id.toString(), movie)
   }
 
   async removeFavourite(movie:any) {
-    await this.mds.set(movie.id, movie)
+    await this.mds.remove(movie.id.toString())
   }
 
 }

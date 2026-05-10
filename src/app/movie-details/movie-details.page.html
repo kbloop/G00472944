@@ -20,8 +20,8 @@
     <img class="movie-details__poster" src="https://image.tmdb.org/t/p/original/{{movie?.poster_path}}">
     <ion-row>
       <ion-col>
-        <ion-button (click)="addToFavourites()">
-          Add To Favourites / Remove from Favourites
+        <ion-button (click)="toggleFavourites()">
+          {{favBtnText}}
         </ion-button>
       </ion-col>
       <ion-col *ngFor="let genre of movie?.genres">
@@ -43,7 +43,7 @@
     <ion-col>
       <ion-item *ngFor="let cast of credits?.cast | slice:0:5" [routerLink]="['/details/', cast.id]">
         <ion-avatar>
-          <img alt="Silhouette of a person's head" src="https://image.tmdb.org/t/p/w45/{{ cast.profile_path }}" />
+          <img class="movie-details__poster" alt="Silhouette of a person's head" src="https://image.tmdb.org/t/p/w45/{{ cast.profile_path }}" />
         </ion-avatar>
         <ion-label>
             {{cast.name}}
