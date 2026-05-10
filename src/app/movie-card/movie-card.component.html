@@ -1,17 +1,26 @@
-<ion-card class="moviecard" button="true" [routerLink]="['/movie-details/', movie.id]">
-  <ion-button class="moviecard__like-btn" shape="round" translucent="true" (click)="saveFavourite(movie)">
-    <ion-icon slot="icon-only" name="heart-outline" close-icon="heart"></ion-icon>
+<div class="moviecard__wrapper">
+  <ion-button *ngIf="isFav; else isNotFav" class="moviecard__like-btn" shape="round" translucent="true" (click)="removeFavourite(movie); $event.preventDefault; $event.stopPropagation;">
+    <ion-icon slot="icon-only" name="heart" close-icon="heart"></ion-icon>
   </ion-button>
-  <img class="moviecard__poster-img" alt="Movie poster" src="https://image.tmdb.org/t/p/original/{{ movie.poster_path }}" />
-  <ion-card-header>
-    <ion-card-title>{{ movie.title }}</ion-card-title>
-    <ion-card-subtitle>
-      <ion-icon name="star"></ion-icon>
-      {{ movie.vote_average }}
-    </ion-card-subtitle>
-  </ion-card-header>
-
-  <ion-card-content class="moviecard__overview-text">
-    {{ movie.overview }}
-  </ion-card-content>
-</ion-card>
+  <ion-card class="moviecard" button="true" [routerLink]="['/movie-details/', movie.id]">
+    <img class="moviecard__poster-img" alt="Movie poster" src="https://image.tmdb.org/t/p/original{{ movie.poster_path }}" />
+    <ion-card-header>
+      <ion-card-title>{{ movie.title }}</ion-card-title>
+      <ion-card-subtitle>
+        <ion-icon name="star"></ion-icon>
+        {{ movie.vote_average }}
+      </ion-card-subtitle>
+    </ion-card-header>
+    
+    <ion-card-content class="moviecard__overview-text">
+      {{ movie.overview }}
+    </ion-card-content>
+  </ion-card>
+</div>
+  
+  <ng-template #isNotFav>
+    <!-- $event.stopPropagation() allows the button to be clicked without triggering the parent action (entering the movie-details page), preventDefault needed too. -->
+    <ion-button  class="moviecard__like-btn" shape="round" translucent="true" (click)="saveFavourite(movie); $event.preventDefault; $event.stopPropagation;">
+      <ion-icon name="heart-outline" slot="icon-only"></ion-icon>
+    </ion-button>
+  </ng-template>

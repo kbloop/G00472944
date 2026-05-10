@@ -3,10 +3,17 @@
 }
 .moviecard__like-btn {
     position: absolute;
-    top: .5rem;
-    right: .5rem;
+    top: 1rem;
+    right: 1rem;
+    z-index: 100;
 }
 
 .moviecard__poster-img {
-    max-width: 16rem;
+    max-width: clamp(10rem, 18rem, 32rem);
+}
+
+.moviecard__wrapper {
+    position: relative;
+    display: flex;
+    height: 100%;
 }

@@ -1,6 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
+      <!-- my student number :) -->
       G00472944
     </ion-title>
     <ion-buttons slot="end">
@@ -20,6 +21,12 @@
       <ion-button (click)="searchForMovies()" expand="full">Search</ion-button>
     </ion-toolbar>
   </ion-header>
-  <!-- Rendering our movie cards components -->
-  <movie-card *ngFor="let movie of moviesToShow" [movie]="movie"></movie-card>
+  <ion-grid>
+    <ion-row>
+      <ion-col sizeMd="4" sizeLg="3" *ngFor="let movie of moviesToShow">
+        <!-- Rendering our moviecard components -->
+        <movie-card [movie]="movie"></movie-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

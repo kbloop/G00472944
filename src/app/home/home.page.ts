@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon, IonSearchbar } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon, IonSearchbar, IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { heart, search, searchCircle} from "ionicons/icons";
 import { MovieCardComponent } from "../movie-card/movie-card.component";
@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [ FormsModule, RouterLink, IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon, IonSearchbar, MovieCardComponent, CommonModule],
+  imports: [IonCol, IonRow, FormsModule, RouterLink, IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon, IonSearchbar, MovieCardComponent, CommonModule, IonGrid],
 })
 export class HomePage {
   url = 'https://api.themoviedb.org/3/movie/popular';
@@ -42,7 +42,7 @@ export class HomePage {
         this.moviesToShow = data.results;
       },
       error: (e) => console.error(e),
-      complete: () => console.info('Trending movies complete :3')
+      complete: () => console.info('Trending movies loading complete :3')
     });
   }
 
@@ -59,7 +59,7 @@ export class HomePage {
         this.moviesToShow = data.results;
       },
       error: (e) => console.error(e),
-      complete: () => console.info('Movie search is finished :D Hope you found what you seek')
+      complete: () => console.info('Movie search is finished :D Hope you have found what you seek')
     });
     console.log(`Value of searchbar is ${ this.searchTerm }`);
   }
