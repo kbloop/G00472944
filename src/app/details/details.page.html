@@ -25,20 +25,44 @@
     src="https://image.tmdb.org/t/p/w185/{{ details?.profile_path }}"
     alt="Image of {{details?.name}}"
     ></ion-img>
+    <!-- Show Also Known As -->
     <ion-item *ngIf="details?.also_known_as.length > 0">
       <ion-note color="medium">Also Known As</ion-note>
-      <ion-label *ngFor="let name of details?.also_known_as">{{name}}</ion-label>
+      <ion-label>
+        <p *ngFor="let name of details?.also_known_as">
+          {{name}}
+          <br>
+        </p>
+      </ion-label>
+    </ion-item>
+    <ion-item *ngIf="details?.birthday">
+      <!-- Show date of birth -->
+      <ion-note color="medium">Date of Birth</ion-note>
+      <ion-label>{{ details?.birthday }}</ion-label>
+    </ion-item>
+    <ion-item *ngIf="details?.deathday">
+      <!-- Show date of death -->
+      <ion-note color="medium">Died</ion-note>
+      <ion-label>{{ details?.deathday }}</ion-label>
+    </ion-item>
+    <ion-item *ngIf="details?.place_of_birth">
+      <!-- Show place of birth -->
+      <ion-note color="medium">Place of Birth</ion-note>
+      <ion-label>{{ details?.place_of_birth }}</ion-label>
     </ion-item>
     <ion-item *ngIf="details?.biography">
+      <!-- Show a biography paragraph -->
       <ion-note color="medium">Biography</ion-note>
       <ion-label>{{details?.biography}}</ion-label>
     </ion-item>
   </ion-list>
-  <ion-list [inset]="true">
+
+  <!-- Show the persons movie credits as an actor! Stand back we got a movie star over here!!! -->
+  <ion-list *ngIf="credits?.cast?.length" [inset]="true" >
     <ion-item>
       <ion-label>Movie Credits</ion-label>
     </ion-item>
-    <ion-item *ngFor="let movie of credits?.cast | slice:0:5" [routerLink]="['/movie-details/', movie?.id]">
+    <ion-item *ngFor="let movie of credits?.cast | slice:0:5+movieInc" [routerLink]="['/movie-details/', movie?.id]">
       <ion-avatar>
         <img alt="Movie Avatar" src="https://image.tmdb.org/t/p/original/{{ movie?.poster_path }}" />
       </ion-avatar>
@@ -53,8 +77,8 @@
         <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
       </ion-button>
     </ion-item>
-    <!-- Button to load in rest of Cast members -->
-    <ion-item>
+    <!-- Button to load in rest of Movie credits -->
+    <ion-item button (click)='this.loadMore(true)' *ngIf="(credits?.cast?.length ?? 0) >= 5+movieInc">
       <ion-label>
           Load more
       </ion-label>
@@ -63,15 +87,17 @@
       </ion-button>
     </ion-item>
   </ion-list>
-  <ion-list [inset]="true">
+  
+  <!-- Show the persons movie credits as a Crew member! So like producer / director etc. -->
+  <ion-list *ngIf="credits?.crew?.length" [inset]="true">
     <ion-item>
       <ion-label>
         Other Credits
       </ion-label>
     </ion-item>
-    <ion-item *ngFor="let movie of credits?.crew | slice:0:5"  [routerLink]="['/movie-details/', movie?.id]">
+    <ion-item *ngFor="let movie of credits?.crew | slice:0:5 + crewInc"  [routerLink]="['/movie-details/', movie?.id]">
       <ion-avatar>
-        <img alt="Silhouette of a person's head" src="https://image.tmdb.org/t/p/original/{{ movie?.poster_path }}" />
+        <img  *ngIf="movie?.poster_path; else avatarReplacement;" alt="Silhouette of a person's head" src="https://image.tmdb.org/t/p/original/{{ movie?.poster_path }}" />
       </ion-avatar>
       <ion-label>
         {{ movie.title }}
@@ -84,8 +110,9 @@
         <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
       </ion-button>
     </ion-item>
-    <!-- Button to load in rest of Crew members -->
-    <ion-item>
+    <!-- Button to load in rest of Other credits -->
+    <!-- using the double ternary operator to check if the credits.crew exists before comparing against the number of itemss we show currently, i.e. if we should show a "show more" button or not. -->
+    <ion-item button (click)="loadMore(false)" *ngIf="(credits?.crew?.length ?? 0) >= (5 + crewInc)">
       <ion-label>
           Load more
       </ion-label>
@@ -96,17 +123,22 @@
   </ion-list>
  
   
-  <!-- Template for when the API doesn't have an image available. -->
+  <!-- Template for when the API doesn't have an image available in header section -->
   <ng-template #noImage class="details-page__no-image">
     <ion-list [inset]="true">
       <ion-item>
         <ion-avatar>
           <ion-icon name="person-circle-outline"  style="font-size: 32px;"></ion-icon>
         </ion-avatar>
-
+        
         <ion-label>
           No image available
         </ion-label>
       </ion-item>
     </ion-list>
+  </ng-template>
+  
+  <!-- Template for when the API doesn't have an image available in list section -->
+  <ng-template #avatarReplacement>
+    <ion-icon name="film-outline" size="large"></ion-icon>
   </ng-template>

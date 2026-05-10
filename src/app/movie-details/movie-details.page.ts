@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 import { addIcons } from 'ionicons';
-import { heart, home, chevronForwardOutline, addOutline } from "ionicons/icons";
+import { heart, home, chevronForwardOutline, addOutline, personCircleOutline, filmOutline } from "ionicons/icons";
 import { MyHttp } from '../services/my-http';
-import { IonChip, IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon, IonGrid, IonRow, IonCol, IonAvatar, IonItem, IonLabel } from "@ionic/angular/standalone";
+import { IonChip, IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon, IonGrid, IonRow, IonCol, IonAvatar, IonItem, IonLabel, IonList } from "@ionic/angular/standalone";
 import { CommonModule } from '@angular/common';
 import { Credits } from '../models/credits';
 import { MyData } from '../services/my-data';
@@ -14,7 +14,7 @@ import { MyData } from '../services/my-data';
   templateUrl: './movie-details.page.html',
   styleUrls: ['./movie-details.page.scss'],
   standalone: true,
-  imports: [RouterLink, IonLabel, IonItem, IonAvatar, IonHeader, IonChip, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon, CommonModule, IonGrid, IonRow, IonCol],
+  imports: [IonList, RouterLink, IonLabel, IonItem, IonAvatar, IonHeader, IonChip, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon, CommonModule, IonGrid, IonRow, IonCol],
 })
 export class MovieDetailsPage implements OnInit {
   movie: any;
@@ -22,10 +22,13 @@ export class MovieDetailsPage implements OnInit {
   isFav?: boolean;
   favBtnText: string = 'Add to Favourites'; 
 
+  castInc: number  = 0;
+  crewInc: number = 0;
+
   private url : string = 'https://api.themoviedb.org/3/movie/'; // + {movie_id}
   private creditsSuffix : string = '/credits' 
   constructor(private route: ActivatedRoute, private router: Router, private mhs: MyHttp, private mds: MyData) {
-    addIcons( { heart, home, chevronForwardOutline, addOutline });
+    addIcons( { heart, home, chevronForwardOutline, addOutline, personCircleOutline, filmOutline });
    }
 
   ngOnInit() {
@@ -91,6 +94,15 @@ export class MovieDetailsPage implements OnInit {
           this.checkFavs(this.movie.id.toString());
         }
       );
+    }
+  }
+
+  // Using the "load more" buttons to control list sizing. 
+  loadMore(isLoadingMovies: boolean) {
+    if(isLoadingMovies) {
+      this.castInc += 5;
+    } else {
+      this.crewInc += 5;
     }
   }
 

@@ -15,94 +15,110 @@
 </ion-header>
 <ion-content>
 
-  <ion-grid>
-    <!-- <img class="movie-details__backdrop" src="https://image.tmdb.org/t/p/original/{{movie?.backdrop_path}}"> -->
-    <img class="movie-details__poster" src="https://image.tmdb.org/t/p/original/{{movie?.poster_path}}">
-    <ion-row>
-      <ion-col>
-        <ion-button (click)="toggleFavourites()">
-          {{favBtnText}}
-        </ion-button>
-      </ion-col>
-      <ion-col *ngFor="let genre of movie?.genres">
+  <!-- Show some details about the Movie --->
+  <ion-list [inset]="true">
+    <img *ngIf="movie?.poster_path; else: noImage" class="movie-details__poster" src="https://image.tmdb.org/t/p/original/{{movie?.poster_path}}">
+    <ion-button (click)="toggleFavourites()">
+      {{favBtnText}}
+    </ion-button>
+    <ion-col *ngFor="let genre of movie?.genres">
         <ion-chip>{{ genre.name }}</ion-chip>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <p class="">{{ movie?.overview }}</p>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
+    </ion-col>
+    <ion-item>
+      <p>{{ movie?.overview }}</p>
+    </ion-item>
+  </ion-list>
+
+  <!-- Show some Cast members -->
+  <ion-list [inset]="true">   
+    <ion-item>
+      <ion-label>
         Cast
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      
-    <ion-col>
-      <ion-item *ngFor="let cast of credits?.cast | slice:0:5" [routerLink]="['/details/', cast.id]">
-        <ion-avatar>
-          <img class="movie-details__poster" alt="Silhouette of a person's head" src="https://image.tmdb.org/t/p/w45/{{ cast.profile_path }}" />
-        </ion-avatar>
-        <ion-label>
-            {{cast.name}}
-          <br>
-          <small>
-            {{cast.character}}
-          </small>
-        </ion-label>
-        <ion-button  fill="clear">
-          <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
-        </ion-button>
-      </ion-item>
-      <!-- Button to load in rest of Cast members -->
-      <ion-item>
-        <ion-label>
-            Load more
-        </ion-label>
-        <ion-button fill="clear">
-          <ion-icon slot="icon-only" name="add-outline"></ion-icon>
-        </ion-button>
-      </ion-item>
-      </ion-col>
-    </ion-row>
+      </ion-label>
+    </ion-item>
     
-    <ion-row>
-      <ion-col>
+    <!-- List of movies Cast members -->
+    <ion-item *ngFor="let cast of credits?.cast | slice:0:5+castInc" [routerLink]="['/details/', cast.id]">
+      <ion-avatar>
+        <img  *ngIf="cast?.profile_path; else avatarReplacement" class="movie-details__poster" alt="Silhouette of a person's head" src="https://image.tmdb.org/t/p/w45/{{ cast.profile_path }}" />
+      </ion-avatar>
+      <ion-label>
+          {{cast.name}}
+        <br>
+        <small>
+          {{cast.character}}
+        </small>
+      </ion-label>
+      <ion-button  fill="clear">
+        <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+    <!-- Button to load in rest of Cast members -->
+    <ion-item  button (click)='this.loadMore(true)' *ngIf="(credits?.cast?.length ?? 0) >= 5+castInc">
+      <ion-label>
+          Load more
+      </ion-label>
+      <ion-button fill="clear">
+        <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+  </ion-list>
+
+  <!-- Show the movies crew members! -->
+  <ion-list *ngIf="credits?.crew?.length" [inset]="true">
+    <ion-item>
+      <ion-label>
         Crew
-      </ion-col>
-    </ion-row>
+      </ion-label>
+    </ion-item>
 
-    <ion-row>
-      
-    <ion-col>
-      <ion-item *ngFor="let crew of credits?.crew | slice:0:5"  [routerLink]="['/details/', crew.id]">
-        <ion-avatar>
-          <img alt="Silhouette of a person's head" src="https://image.tmdb.org/t/p/w45/{{ crew.profile_path }}" />
-        </ion-avatar>
-        <ion-label>
-          {{ crew.name }}
-          <br>
-          <small>
-          {{ crew.job }}
-          </small>
-        </ion-label>
-        <ion-button href="" fill="clear">
-          <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
-        </ion-button>
-      </ion-item>
-      <!-- Button to load in rest of Crew members -->
-      <ion-item>
-        <ion-label>
-            Load more
-        </ion-label>
-        <ion-button fill="clear">
-          <ion-icon slot="icon-only" name="add-outline"></ion-icon>
-        </ion-button>
-      </ion-item>
-      </ion-col>
-    </ion-row>
+    <!-- List of the movies crew members! -->
+    <ion-item *ngFor="let crew of credits?.crew | slice:0:5+crewInc"  [routerLink]="['/details/', crew.id]">
+      <ion-avatar>
+        <img *ngIf="crew?.profile_path; else avatarReplacement" alt="Silhouette of a person's head" src="https://image.tmdb.org/t/p/w45/{{ crew.profile_path }}" />
+      </ion-avatar>
+      <ion-label>
+        {{ crew.name }}
+        <br>
+        <small>
+        {{ crew.job }}
+        </small>
+      </ion-label>
+      <ion-button href="" fill="clear">
+        <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
 
-  </ion-grid>
+    <!-- Button to load in rest of Crew members -->
+    <ion-item button (click)="loadMore(false)" *ngIf="(credits?.crew?.length ?? 0) >= (5 + crewInc)">
+      <ion-label>
+          Load more
+      </ion-label>
+      <ion-button fill="clear">
+        <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
 </ion-content>
+
+
+ <!-- Template for when the API doesn't have an image available in header section -->
+ <ng-template #noImage class="details-page__no-image">
+  <ion-list [inset]="true">
+    <ion-item>
+      <ion-avatar>
+        <ion-icon name="film-outline"  style="font-size: 32px;"></ion-icon>
+      </ion-avatar>
+      
+      <ion-label>
+        No poster image available ;-;
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ng-template>
+
+<ng-template #avatarReplacement>
+  <ion-icon name="person-circle-outline" size="large"></ion-icon>
+</ng-template>
