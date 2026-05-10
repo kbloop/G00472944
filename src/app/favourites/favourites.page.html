@@ -12,5 +12,11 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-<movie-card *ngFor="let fav of favouritesToDisplay" [movie]="fav"></movie-card>
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let fav of favouritesToDisplay" sizeXs="12" sizeSm="6" sizeMd="4" sizeLg="3" sizeXl="2">
+        <movie-card  [movie]="fav"></movie-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

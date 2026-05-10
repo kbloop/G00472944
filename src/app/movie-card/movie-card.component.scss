@@ -9,11 +9,28 @@
 }
 
 .moviecard__poster-img {
-    max-width: clamp(10rem, 18rem, 32rem);
+    max-width: clamp(8rem, 100%, 32rem);
+    transition: transform 200ms ease-in-out;
+}
+
+.moviecard__title {
+    background: white;
 }
 
 .moviecard__wrapper {
     position: relative;
     display: flex;
     height: 100%;
+}
+
+.moviecard {
+    box-shadow: none;
+    border-radius: .75rem;
+    transition: box-shadow 200ms ease-out;
+    &:hover {
+        box-shadow: 0 0 13px rgba(0,0,0,.14);
+        .moviecard__poster-img {
+            transform: scale(1.05);
+        }
+    }
 }
