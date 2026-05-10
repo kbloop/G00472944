@@ -24,17 +24,82 @@ export class HomePage {
   searchTerm: string = '';
   searchURL = 'https://api.themoviedb.org/3/search/movie?query=';
   searchMovies = [];
-
+  trendingBtnColor: string = "primary";
+  topRatedBtnColor: string = "light";
+  upcomingBtnColor: string = "light";
+  playingBtnColor: string = "light";
+  
   constructor(private mhs: MyHttp, private mds: MyData, private route: ActivatedRoute) {
     addIcons( { heart, search, searchCircle });
   }
-
+  
   ngOnInit() {
     // On page load we show trending movies.
     this.getTrendingMovies();
   }
-
+  
   getTrendingMovies() {
+    this.url = 'https://api.themoviedb.org/3/movie/popular';
+    // Toggle the color of the buttons to mimic a tab (don't want to use ion-tab, that's more for like page navigation)
+    this.trendingBtnColor = "primary";
+    this.topRatedBtnColor = "light";
+    this.upcomingBtnColor = "light";
+    this.playingBtnColor = "light";
+    
+    // Trending movies API call
+    this.mhs.get(this.url).subscribe({
+      next: (data) => {
+        console.log(data);
+        this.moviesToShow = data.results;
+      },
+      error: (e) => console.error(e),
+      complete: () => console.info('Trending movies loading complete :3')
+    });
+  }
+  
+  getTopRatedMovies() {
+    this.url = 'https://api.themoviedb.org/3/movie/top_rated';
+    // Toggle the color of the buttons to mimic a tab
+    this.trendingBtnColor = "light";
+    this.topRatedBtnColor = "primary";
+    this.upcomingBtnColor = "light";
+    this.playingBtnColor = "light";
+    // Trending movies API call
+    this.mhs.get(this.url).subscribe({
+      next: (data) => {
+        console.log(data);
+        this.moviesToShow = data.results;
+      },
+      error: (e) => console.error(e),
+      complete: () => console.info('Trending movies loading complete :3')
+    });
+  }
+  
+  getPlayingMovies() {
+    this.url = 'https://api.themoviedb.org/3/movie/now_playing';
+    // Toggle the color of the buttons to mimic a tab
+    this.trendingBtnColor = "light";
+    this.topRatedBtnColor = "light";
+    this.upcomingBtnColor = "light";
+    this.playingBtnColor = "primary";
+    // Trending movies API call
+    this.mhs.get(this.url).subscribe({
+      next: (data) => {
+        console.log(data);
+        this.moviesToShow = data.results;
+      },
+      error: (e) => console.error(e),
+      complete: () => console.info('Trending movies loading complete :3')
+    });
+  }
+
+  getUpcomingMovies() {
+    this.url = 'https://api.themoviedb.org/3/movie/upcoming';
+    // Toggle the color of the buttons to mimic a tab
+    this.trendingBtnColor = "light";
+    this.topRatedBtnColor = "light";
+    this.upcomingBtnColor = "primary";
+    this.playingBtnColor = "light";
     // Trending movies API call
     this.mhs.get(this.url).subscribe({
       next: (data) => {

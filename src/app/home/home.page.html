@@ -23,6 +23,14 @@
   </ion-header>
   <ion-grid>
     <ion-row>
+      <ion-col>
+        <ion-button [color]="trendingBtnColor" (click)="getTrendingMovies()">Trending Movies</ion-button>
+        <ion-button [color]="topRatedBtnColor" (click)="getTopRatedMovies()">Top Rated Movies</ion-button>
+        <ion-button [color]="upcomingBtnColor" (click)="getUpcomingMovies()">Upcoming Movies</ion-button>
+        <ion-button [color]="playingBtnColor" (click)="getPlayingMovies()">Currently Playing Movies</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
       <ion-col sizeXs="12" sizeSm="6" sizeMd="4" sizeLg="3" sizeXl="2" *ngFor="let movie of moviesToShow">
         <!-- Rendering our moviecard components -->
         <movie-card [movie]="movie"></movie-card>
