@@ -1,4 +1,5 @@
 <div class="moviecard__wrapper">
+  <!-- Floating favourite button -->
   <ion-button *ngIf="isFav; else isNotFav" class="moviecard__like-btn" shape="round" translucent="true" (click)="removeFavourite(movie); $event.preventDefault; $event.stopPropagation;">
     <ion-icon slot="icon-only" name="heart" close-icon="heart"></ion-icon>
   </ion-button>
@@ -15,6 +16,11 @@
     <ion-card-content class="moviecard__overview-text">
       {{ movie.overview }}
     </ion-card-content>
+    <!-- Off screen label that animates in when hovering to show whole card is clickable -->
+    <span class="moviecard__floating-label">
+      View Details
+      <ion-icon slot="icon-only" name="arrow-forward-circle-outline"></ion-icon>
+    </span>
   </ion-card>
 </div>
   

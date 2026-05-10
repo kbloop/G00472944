@@ -3,7 +3,7 @@ import { Component, OnInit, Input, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonRouterLink } from "@ionic/angular/standalone";
 import { addIcons } from 'ionicons';
-import { heart, heartOutline, star } from 'ionicons/icons';
+import { arrowForwardCircleOutline, heart, heartOutline, star } from 'ionicons/icons';
 import { MyData } from '../services/my-data';
 import { Movie } from '../models/credits';
 
@@ -19,7 +19,7 @@ export class MovieCardComponent implements OnInit {
   isFav: boolean = false;
 
   constructor(private mds: MyData) {
-    addIcons({ heart, heartOutline, star });
+    addIcons({ heart, heartOutline, star, arrowForwardCircleOutline });
   }
 
   ngOnInit() {
